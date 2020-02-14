@@ -11,14 +11,6 @@ node {
     stage('Clone sources') {
         git url: 'https://github.com/phanidurga/webapp.git'
     }
-stage('Sonarqube') {
-    environment {
-        scannerHome = tool 'SonarQubeScanner'
-    }
-    steps {
-        withSonarQubeEnv('sonarqube') {
-            sh "${scannerHome}/bin/sonar-scanner"
-        }
  stage('SonarQube analysis') { 
      environment{
 	scannerHome = tool 'sonarqube scanner'
