@@ -11,9 +11,20 @@ node {
     stage('Clone sources') {
         git url: 'https://github.com/phanidurga/webapp.git'
     }
+stage('Sonarqube') {
+    environment {
+        scannerHome = tool 'SonarQubeScanner'
+    }
+    steps {
+        withSonarQubeEnv('sonarqube') {
+            sh "${scannerHome}/bin/sonar-scanner"
+        }
  stage('SonarQube analysis') { 
+     environment{
+	scannerHome = tool 'sonarqube scanner'
+}
         withSonarQubeEnv('sonarqube') { 
-          sh 'rtMaven org.sonarsource.scanner.maven:sonar-maven-plugin:3.3.0.603:sonar ' + 
+          sh '${scannerHome}/bin/sonar-scanner ' + 
           '-f pom.xml ' +
           '-Dsonar.projectKey=com.huettermann:all:master ' +
           '-Dsonar.login=admin' +
